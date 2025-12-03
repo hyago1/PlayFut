@@ -1,5 +1,5 @@
-import 'package:playfut/ui/widgets/bannerAd.dart';
-import 'package:playfut/ui/widgets/sectionChannels.dart';
+import 'package:PlayFut/ui/widgets/bannerAd.dart';
+import 'package:PlayFut/ui/widgets/sectionChannels.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -37,11 +37,7 @@ class HomePage extends StatelessWidget {
         elevation: 0,
         title: Row(
           children: [
-            ImageIcon(
-              AssetImage('assets/images/icon.png'), // Path to your image
-              size: 30,
-
-            ),
+           Icon(Icons.play_arrow, color: Colors.green,),
             SizedBox(width: 8),
             Text("PlayFut", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,color: Colors.white)),
           ],
@@ -52,7 +48,9 @@ class HomePage extends StatelessWidget {
       ),
 
       body: SingleChildScrollView(
+        padding: EdgeInsetsGeometry.only(bottom: 20),
         child: Column(
+
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             bannerAd(),
