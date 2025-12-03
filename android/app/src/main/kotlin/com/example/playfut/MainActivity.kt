@@ -1,4 +1,4 @@
-package com.example.playfut
+package com.hpdev.playfut
 
 import io.flutter.embedding.android.FlutterActivity
 
