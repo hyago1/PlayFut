@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -6,9 +9,30 @@ plugins {
 }
 
 android {
-    namespace = "com.example.playfut"
+    namespace = "com.hpdev.playfut"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+
+    // 🔑 1. CONFIGURAÇÃO DA CHAVE DE ASSINATURA (SIGNING CONFIGS)
+    signingConfigs {
+        create("release") {
+            val keyPropertiesFile = rootProject.file("key.properties")
+
+            if (keyPropertiesFile.exists()) {
+                val props = Properties()
+                props.load(FileInputStream(keyPropertiesFile))
+
+                storeFile = file(props["storeFile"] as String)
+                storePassword = props["storePassword"] as String
+                keyAlias = props["keyAlias"] as String
+                keyPassword = props["keyPassword"] as String
+            } else {
+                // Apenas uma mensagem de aviso.
+                // A atribuição do signingConfig é feita no bloco buildTypes abaixo.
+                println("⚠️ ATENÇÃO: key.properties não encontrado. Usando chaves de debug para build de release.")
+            }
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -20,10 +44,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.playfut"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        applicationId = "com.hpdev.playfut"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -31,10 +52,17 @@ android {
     }
 
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+        getByName("release") {
+            
+        isMinifyEnabled = true // <--- Mudar de volta para TRUE!
+        isShrinkResources = true // <--- Mudar de volta para TRUE!
+
+        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
+        }   
+
+        getByName("debug") {
+            // Configurações de debug
         }
     }
 }
