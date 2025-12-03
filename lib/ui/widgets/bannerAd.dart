@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-
-
-const String adUnitId =
-    'ca-app-pub-2109984465311613/4646382083';
-
+const String adUnitId = 'ca-app-pub-2109984465311613/4646382083';
 
 class bannerAd extends StatefulWidget {
-
   const bannerAd({super.key});
 
   @override
@@ -54,23 +49,24 @@ class _bannerAdState extends State<bannerAd> {
   @override
   void dispose() {
     _bannerAd
-        ?.dispose(); // MUITO IMPORTANTE: Descarte o anúncio quando o widget for removido
+        ?.dispose(); // MUITO IMPORTANTE: Descarta o anúncio quando o widget for removido
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final double bannerHeight = _bannerAd?.size.height.toDouble() ?? 0.0;
     // Use a largura real do banner (para centralizar se for menor que a tela)
     final double bannerWidth = _bannerAd?.size.width.toDouble() ?? 0.0;
 
-
-    return  Container(
-      alignment: Alignment.center,
-      width: bannerWidth,
-      height: bannerHeight,
-      // O AdWidget é o widget que exibe o anúncio carregado
-      child: AdWidget(ad: _bannerAd!),
-    );
+    return _isAdLoaded
+        ? Container(
+            alignment: Alignment.center,
+            width: bannerWidth,
+            height: bannerHeight,
+            // O AdWidget é o widget que exibe o anúncio carregado
+            child: AdWidget(ad: _bannerAd!),
+          )
+        : const SizedBox.shrink(); // Retorna um widget vazio se o anúncio não estiver carregado
   }
 }
-
