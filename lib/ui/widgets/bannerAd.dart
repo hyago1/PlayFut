@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../../../constants/app_constants.dart';
 
-const String adUnitId = 'ca-app-pub-2109984465311613/4646382083';
 
 class bannerAd extends StatefulWidget {
   const bannerAd({super.key});
@@ -22,7 +22,7 @@ class _bannerAdState extends State<bannerAd> {
 
   void _loadBannerAd() {
     _bannerAd = BannerAd(
-      adUnitId: adUnitId,
+      adUnitId: AdConfig.adUnitId,
       request: const AdRequest(),
       size: AdSize
           .leaderboard, // Escolha o tamanho do banner (e.g., banner, largeBanner, fullBanner)
@@ -43,7 +43,7 @@ class _bannerAdState extends State<bannerAd> {
         },
         // Outros callbacks como onAdOpened, onAdClosed, etc.
       ),
-    )..load(); // O método .load() inicia o processo de carregamento.
+    )..load(); // O método .load() inicia o processo de carregament'o.
   }
 
   @override
